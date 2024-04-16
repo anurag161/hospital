@@ -48,7 +48,7 @@ export default function Table() {
       { Header: "Column 4", accessor: "col4" },
       { Header: "Column 5", accessor: "col5" },
       { Header: "Column 6", accessor: "col6" },
-      { Header: "Column 6", accessor: "col7" },
+      { Header: "Column 6", accessor: "col" },
       // Add more columns here
       { Header: "Status", accessor: "status", Cell: StatusCell },
     ],
@@ -71,9 +71,14 @@ export default function Table() {
               <tr
                 {...headerGroup.getHeaderGroupProps()}
                 className="bg-gray-200"
+                key={headerGroup.id} // Added key prop
               >
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className="px-4 py-2">
+                  <th
+                    {...column.getHeaderProps()}
+                    className="px-4 py-2"
+                    key={column.id} // Added key prop
+                  >
                     {column.render("Header")}
                   </th>
                 ))}
@@ -81,13 +86,20 @@ export default function Table() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map((row, rowIndex) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
+                <tr
+                  {...row.getRowProps()}
+                  key={rowIndex} // Added key prop
+                >
+                  {row.cells.map((cell, cellIndex) => {
                     return (
-                      <td {...cell.getCellProps()} className="border px-4 py-2">
+                      <td
+                        {...cell.getCellProps()}
+                        className="border px-4 py-2"
+                        key={cellIndex} // Added key prop
+                      >
                         {cell.render("Cell")}
                       </td>
                     );
